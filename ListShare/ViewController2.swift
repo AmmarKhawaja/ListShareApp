@@ -4,7 +4,7 @@ import UIKit
  
 //var ref2 : DatabaseReference?
 //var ref2handle : DatabaseHandle?
- 
+
 var listnameIn : String?
 var itemlistIn : String?
 var sublistCopyIn : String?
