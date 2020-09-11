@@ -1,0 +1,6 @@
+framework module Pods_ListShare_ListShareUITests {
+  umbrella header "Pods-ListShare-ListShareUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
