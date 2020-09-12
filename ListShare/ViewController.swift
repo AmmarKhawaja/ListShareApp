@@ -5,7 +5,14 @@ import FirebaseDatabase
  
 var ref : DatabaseReference?
 var refhandle : DatabaseHandle?
-var listKeys = ["exampletest"]
+
+
+var listNames = ["exampleName"]
+var listKeys = ["exampleKey"]
+
+var allListID = ["exampleID"]
+var allListNames = ["exampleNameChild"]
+
 var storedLists : [String]?
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -22,16 +29,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         
         ref?.child("Users").child(username!).child("addedList").observe(.childAdded, with: { (snapshot) in
+            
+            //listNames.append(snapshot.)
             listKeys.append(snapshot.key)
             defaults.set(listKeys, forKey: "listKeys")
-            print("A \(listKeys[0])")
-            print("B \(listKeys[1])?")
+            
             listKeys = defaults.object(forKey: "listKeys") as! [String]
-            print("C \(listKeys[0])")
-            print("D \(listKeys[1])")
+            
+        })
+        ref?.child("Lists").observe(.childAdded, with: { (snapshot) in
+            allListID.append(snapshot.key)
+            defaults.set(allListID, forKey: "allListID")
+            allListID = defaults.object(forKey: "allListID") as! [String]
+        })
+        ref?.child("Lists").child("Name").observe(.childAdded, with: { (snapshot) in
+            allListID.append(snapshot.key)
+            defaults.set(allListNames, forKey: "allListNames")
+            allListID = defaults.object(forKey: "allListID") as! [String]
         })
     }
     override func viewDidAppear(_ animated: Bool) {
+        updateData()
+        
+        listTableView.delegate = self
+        listTableView.dataSource = self
         
         if (defaults.bool(forKey: "used")) {
             print("Not a New User!")
@@ -64,15 +85,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return listKeys.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listcell", for: indexPath)
-        cell.textLabel?.text = "New List"
+        cell.textLabel?.text = listKeys[indexPath.row]
+        print(listKeys[indexPath.row])
         cell.textLabel?.font = UIFont(name: "MuktaMahee-Bold", size:20)
         cell.textLabel?.textColor = UIColor.white
-        cell.textLabel?.text = storedLists?[indexPath.row]
+        
         cell.layer.cornerRadius = 20
         
         cell.layer.masksToBounds = true
