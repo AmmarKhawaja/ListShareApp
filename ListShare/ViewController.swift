@@ -5,7 +5,7 @@ import FirebaseDatabase
  
 var ref : DatabaseReference?
 var refhandle : DatabaseHandle?
- 
+var listKeys = ["exampletest"]
 var storedLists : [String]?
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -19,11 +19,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         listTableView.layer.cornerRadius = 20
         ref = Database.database().reference()
         username = defaults.string(forKey: "user")
+        
+        
+        ref?.child("Users").child(username!).child("addedList").observe(.childAdded, with: { (snapshot) in
+            listKeys.append(snapshot.key)
+            defaults.set(listKeys, forKey: "listKeys")
+            print("A \(listKeys[0])")
+            print("B \(listKeys[1])?")
+            listKeys = defaults.object(forKey: "listKeys") as! [String]
+            print("C \(listKeys[0])")
+            print("D \(listKeys[1])")
+        })
     }
     override func viewDidAppear(_ animated: Bool) {
         
         if (defaults.bool(forKey: "used")) {
             print("Not a New User!")
+            
             refhandle = ref?.child("Users").child(defaults.string(forKey: "user")!).child("addedLists").observe(.childAdded, with: { (listsem) in
                 print(listsem.key)
             })

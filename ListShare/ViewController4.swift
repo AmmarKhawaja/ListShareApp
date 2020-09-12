@@ -1,8 +1,8 @@
 //LOGIN SCREEN//
 import UIKit
-//import FirebaseDatabase
-//var ref0 : DatabaseReference?
-//var ref0handle : DatabaseHandle?
+import FirebaseDatabase
+var ref0 : DatabaseReference?
+var ref0handle : DatabaseHandle?
 var username : String?
 var defaults = UserDefaults.standard
 class ViewController4: UIViewController {
@@ -19,7 +19,7 @@ class ViewController4: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         delanddata()
-        //ref0 = Database.database().reference()
+        ref0 = Database.database().reference()
         initialViewSet()
         
     }
@@ -39,20 +39,20 @@ extension ViewController4: UITextFieldDelegate {
         
         username = usernameInput.text!
         
-        //ref0?.child("Users").observeSingleEvent(of: .value, with: { (snapshot) in
-            //if(snapshot.hasChild(username!)) {
-            //    self.usernameDenied()
-            //}
-            //else {
-            //    textField.resignFirstResponder()
-            //    self.usernameAccepted()
-            //}
-        //})
+        ref0?.child("Users").observeSingleEvent(of: .value, with: { (snapshot) in
+            if(snapshot.hasChild(username!)) {
+                self.usernameDenied()
+            }
+            else {
+                textField.resignFirstResponder()
+                self.usernameAccepted()
+            }
+        })
         return true
     }
     
     func usernameAccepted() {
-        //ref0?.child("Users").child(username!).child("Premium").setValue("false")
+        ref0?.child("Users").child(username!).child("Premium").setValue("false")
         print("New User Created")
         self.usernameTaken.textColor = UIColor.green
         self.usernameTaken.text = "Username created!"
@@ -61,7 +61,7 @@ extension ViewController4: UITextFieldDelegate {
         defaults.set(username, forKey: "user")
         
         let funct = ViewController3()
-        //funct.firebaseAddList(name: "Example List")
+        funct.firebaseAddList(name: "Example List")
         
         print(defaults.string(forKey: "user")!)
         
