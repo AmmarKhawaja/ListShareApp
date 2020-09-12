@@ -1,9 +1,9 @@
 //SPECIFIC LIST VIEW
 import UIKit
-//import FirebaseDatabase
+import FirebaseDatabase
  
-//var ref2 : DatabaseReference?
-//var ref2handle : DatabaseHandle?
+var ref2 : DatabaseReference?
+var ref2handle : DatabaseHandle?
 
 var listnameIn : String?
 var itemlistIn : String?
@@ -23,7 +23,7 @@ class ViewController2: UIViewController, UITableViewDataSource, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         delanddata()
-        //ref2 = Database.database().reference()
+        ref2 = Database.database().reference()
     }
     
     func delanddata() {
@@ -52,7 +52,7 @@ extension ViewController2 : UITextFieldDelegate {
             doneswitch?[indexPath.row] = 1
         }
         else {
-            //let sub = sublistCopy![indexPath.row]
+            let sub = sublistCopy![indexPath.row]
             //sublist?[indexPath.row] = sub
             doneswitch?[indexPath.row] = 0
         }

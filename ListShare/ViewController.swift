@@ -1,10 +1,10 @@
 //LISTS LIST
 import UIKit
 import Foundation
-//import FirebaseDatabase
+import FirebaseDatabase
  
-//var ref : DatabaseReference?
-//var refhandle : DatabaseHandle?
+var ref : DatabaseReference?
+var refhandle : DatabaseHandle?
  
 var storedLists : [String]?
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -17,16 +17,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         dataanddel()
         listTableView.layer.cornerRadius = 20
-        //ref = Database.database().reference()
+        ref = Database.database().reference()
         username = defaults.string(forKey: "user")
     }
     override func viewDidAppear(_ animated: Bool) {
         
         if (defaults.bool(forKey: "used")) {
             print("Not a New User!")
-            //refhandle = ref?.child("Users").child(defaults.string(forKey: "user")!).child("addedLists").observe(.childAdded, with: { (listsem) in
-                //print(listsem.key)
-            //})
+            refhandle = ref?.child("Users").child(defaults.string(forKey: "user")!).child("addedLists").observe(.childAdded, with: { (listsem) in
+                print(listsem.key)
+            })
         }
         else {
             print("Is a New User")
