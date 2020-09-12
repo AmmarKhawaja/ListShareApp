@@ -27,26 +27,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         ref = Database.database().reference()
         username = defaults.string(forKey: "user")
         
-        
+        //Gets your list keys
         ref?.child("Users").child(username!).child("addedList").observe(.childAdded, with: { (snapshot) in
             
-            //listNames.append(snapshot.)
             listKeys.append(snapshot.key)
             defaults.set(listKeys, forKey: "listKeys")
             
             listKeys = defaults.object(forKey: "listKeys") as! [String]
             
         })
+        //Gets all list keys
         ref?.child("Lists").observe(.childAdded, with: { (snapshot) in
             allListID.append(snapshot.key)
             defaults.set(allListID, forKey: "allListID")
             allListID = defaults.object(forKey: "allListID") as! [String]
+            
         })
-        ref?.child("Lists").child("Name").observe(.childAdded, with: { (snapshot) in
-            allListID.append(snapshot.key)
-            defaults.set(allListNames, forKey: "allListNames")
-            allListID = defaults.object(forKey: "allListID") as! [String]
-        })
+        
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         updateData()
@@ -76,7 +74,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func updateData() {
-        _ = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(ViewController.refresh), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(ViewController.refresh), userInfo: nil, repeats: true)
         
     }
     
