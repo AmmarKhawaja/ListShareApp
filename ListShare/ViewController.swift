@@ -25,24 +25,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         dataanddel()
         listTableView.layer.cornerRadius = 20
         ref = Database.database().reference()
-        username = defaults.string(forKey: "user")
-        
-        //Gets your list keys
-        ref?.child("Users").child(username!).child("addedList").observe(.childAdded, with: { (snapshot) in
-            
-            listKeys.append(snapshot.key)
-            defaults.set(listKeys, forKey: "listKeys")
-            
-            listKeys = defaults.object(forKey: "listKeys") as! [String]
-            
-        })
-        //Gets all list keys
-        ref?.child("Lists").observe(.childAdded, with: { (snapshot) in
-            allListID.append(snapshot.key)
-            defaults.set(allListID, forKey: "allListID")
-            allListID = defaults.object(forKey: "allListID") as! [String]
-            
-        })
         
         
     }
@@ -56,15 +38,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             print("Not a New User!")
             
             refhandle = ref?.child("Users").child(defaults.string(forKey: "user")!).child("addedLists").observe(.childAdded, with: { (listsem) in
-                print(listsem.key)
+                print("overwatch \(listsem.key)")
             })
+            
+            username = defaults.string(forKey: "user")
+                
+            //Gets your list keys
+            ref?.child("Users").child(username!).child("addedList").observe(.childAdded, with: { (snapshot) in
+                
+                listKeys = defaults.object(forKey: "listKeys") as! [String]
+                listKeys.append(snapshot.key)
+                defaults.set(listKeys, forKey: "listKeys")
+                
+            })
+                
+            
+            ref?.child("Lists").observe(.childAdded, with: { (snapshot) in
+            
+                for key in listKeys {
+                    if(key == snapshot.key) {
+                        print("found \(snapshot.key) and \(key)")
+                    }
+                }
+            
+            })
+            
+            
         }
         else {
+            
             print("Is a New User")
             self.performSegue(withIdentifier: "cont", sender: self)
             defaults.set(true, forKey: "used")
-        }
+            defaults.set(listKeys, forKey: "listKeys")
+            defaults.set(allListID, forKey: "allListID")
         
+        }
         
     }
     
@@ -89,7 +98,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listcell", for: indexPath)
         cell.textLabel?.text = listKeys[indexPath.row]
-        print(listKeys[indexPath.row])
+        
         cell.textLabel?.font = UIFont(name: "MuktaMahee-Bold", size:20)
         cell.textLabel?.textColor = UIColor.white
         

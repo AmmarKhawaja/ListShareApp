@@ -53,6 +53,7 @@ extension ViewController4: UITextFieldDelegate {
     
     func usernameAccepted() {
         ref0?.child("Users").child(username!).child("Premium").setValue("false")
+        ref0?.child("Users").child(username!).child("addedList").child("exList").setValue(true)
         print("New User Created")
         self.usernameTaken.textColor = UIColor.green
         self.usernameTaken.text = "Username created!"
@@ -60,8 +61,6 @@ extension ViewController4: UITextFieldDelegate {
  
         defaults.set(username, forKey: "user")
         
-        let funct = ViewController3()
-        funct.firebaseAddList(name: "Example List")
         
         print(defaults.string(forKey: "user")!)
         
