@@ -3,11 +3,11 @@ import UIKit
 import FirebaseDatabase
 var ref3 : DatabaseReference?
 var ref3handle : DatabaseHandle?
-var listKey : String?
+
 var tlistKey : String?
 var did : Bool?
 class ViewController3: UIViewController {
-    
+    var listKey : String? = " "
     @IBOutlet weak var newListInput: UITextField!
     @IBOutlet weak var listnamePreview: UILabel!
     @IBOutlet weak var addUsernameInput: UITextField!
@@ -18,7 +18,10 @@ class ViewController3: UIViewController {
         delanddata()
         ref3 = Database.database().reference()
         did = true
-        
+        //maybe remove later, observes all lists and puts them into main phone
+        firebaseAddList(name: " ", user: " ") {na in
+            print(" ")
+        }
     }
     
     func delanddata() {
@@ -27,6 +30,7 @@ class ViewController3: UIViewController {
     }
  
 }
+var listKey : String?
 extension ViewController3 : UITextFieldDelegate {
     
     
@@ -37,38 +41,37 @@ extension ViewController3 : UITextFieldDelegate {
             
             listnamePreview.text = newListInput.text!
             listnameIn = newListInput.text!
-            tlistKey = firebaseAddList(name: newListInput.text!)
+            print(defaults.string(forKey: "user")!)
+            firebaseAddList(name: newListInput.text!, user: defaults.string(forKey: "user")!) {listKey0 in
+                self.listKey = listKey0
+                print("completion listKey \(self.listKey!)")
+            }
             newListInput.alpha = 0
         }
         if (addUsernameInput.text != "") {
             print("ADDED \(addUsernameInput.text!)")
-            firebaseAddUserToList(user: addUsernameInput.text!, list: tlistKey!)
+            firebaseAddUserToList(user: addUsernameInput.text!, list: listKey!)
+            
         }
         did = false
         return true
     }
     
-    func firebaseAddList(name: String) -> String{
-        ref3?.child("Lists").childByAutoId().child("Name").setValue(name)
-        ref3handle = ref3?.child("Lists").observe(.childAdded, with: { (listsem) in
-            print(listsem.key)
-            ref3?.child("Users").child(username!).child("addedList").child(listsem.key).setValue("true")
-            ref3?.child("Lists").child(listsem.key).child("addedItems").child("example item").child("isDone").setValue(false)
-            ref3?.child("Lists").child(listsem.key).child("addedItems").child("example item").child("byUser").setValue(defaults.string(forKey: "user"))
-            
-            listKey = listsem.key
-            print("listKey \(listKey!)")
-            
-        })
+    func firebaseAddList(name: String, user: String, completion: @escaping (String) -> Void) {
         
-        return listKey ?? " "
+        listKey = ref3?.child("Users").child(user).child("addedLists").childByAutoId().key
+            
+        ref3?.child("Users").child(user).childByAutoId().child("Name").setValue(name)
+        ref3?.child("Lists").child(listKey!).setValue("true")
+        ref3?.child("Lists").child(listKey!).child("addedItems").child("example item").child("isDone").setValue(false)
+        ref3?.child("Lists").child(listKey!).child("addedItems").child("example item").child("byUser").setValue(defaults.string(forKey: "user"))
+        
+        print("listKey \(listKey!)")
     }
+    
     func firebaseAddUserToList(user : String, list : String) {
         
-        ref3?.child("Users").child(user).child("addedList").child(tlistKey!).setValue(true)
-        print("listKey check2 \(tlistKey!)")
-            
-        
+        ref3?.child("Users").child(user).child("addedList").child(list).setValue(true)
         
     }
         
