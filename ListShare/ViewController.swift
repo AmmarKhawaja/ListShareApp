@@ -13,7 +13,9 @@ var listKeys = ["exampleKey"]
 var allListID = ["exampleID"]
 var allListNames = ["exampleNameChild"]
 
-var storedLists : [String]?
+var listName = "exampleName"
+
+var getList : [String]?
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var listTableView: UITableView!
@@ -107,6 +109,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.layer.masksToBounds = true
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        listName = listNames[indexPath.row]
+        
+        ref?.child("Users").child(defaults.string(forKey: "user")!).child("addedList").child(listName).observe(.childAdded, with: { (snapshot) in
+            
+            getList?.append(snapshot.key)
+        })
+        self.performSegue(withIdentifier: "showlist", sender: self)
     }
 }
  
