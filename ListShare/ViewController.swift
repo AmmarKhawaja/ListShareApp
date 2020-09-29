@@ -13,14 +13,12 @@ var listKeys = ["exampleKey"]
 var allListID = ["exampleID"]
 var allListNames = ["exampleNameChild"]
 
-var listName = "exampleName"
+var getlistKey = "exampleID"
 
-var getList : [String]?
+var getList = ["exItem"]
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var listTableView: UITableView!
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,11 +110,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        listName = listNames[indexPath.row]
+        getlistKey = listKeys[indexPath.row]
         
-        ref?.child("Users").child(defaults.string(forKey: "user")!).child("addedList").child(listName).observe(.childAdded, with: { (snapshot) in
-            
-            getList?.append(snapshot.key)
+        ref?.child("Lists").child(getlistKey).child("addedItems").observe(.childAdded, with: { (snapshot) in
+            print(getlistKey)
+            getList.append(snapshot.key)
+            print(getList[1])
         })
         self.performSegue(withIdentifier: "showlist", sender: self)
     }

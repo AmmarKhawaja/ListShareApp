@@ -1,4 +1,4 @@
-//LOGIN SCREEN//
+//LOGIN SCREEN
 import UIKit
 import FirebaseDatabase
 var ref0 : DatabaseReference?
