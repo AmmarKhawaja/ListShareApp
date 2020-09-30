@@ -63,7 +63,7 @@ extension ViewController3 : UITextFieldDelegate {
             
         ref3?.child("Users").child(user).childByAutoId().child("Name").setValue(name)
         ref3?.child("Lists").child(listKey!).setValue("true")
-        ref3?.child("Lists").child(listKey!).child("addedItems").child("example item").child("isDone").setValue(false)
+        ref3?.child("Lists").child(listKey!).child("addedItems").child("example item").child("isDone").setValue("Not Done")
         ref3?.child("Lists").child(listKey!).child("addedItems").child("example item").child("byUser").setValue(defaults.string(forKey: "user"))
         
         print("listKey \(listKey!)")
