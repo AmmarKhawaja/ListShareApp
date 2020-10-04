@@ -64,7 +64,7 @@
 		9D6DF740250AEBD8002C490F /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		9D6DF742250AEBE5002C490F /* ViewController3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController3.swift; sourceTree = "<group>"; };
 		9D6DF744250AEBF3002C490F /* ViewController4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController4.swift; sourceTree = "<group>"; };
-		9D6DF746250AEDD9002C490F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9D6DF746250AEDD9002C490F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../Main.storyboard; sourceTree = "<group>"; };
 		9D722F51250BD2BB004F2B22 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9DAB3D0D25227DBD00F7E0DC /* ViewController5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController5.swift; path = /Users/user179293/Desktop/ListShare/ListShare/ViewController5.swift; sourceTree = "<absolute>"; };
 		C2ABEBBD69BB98519C2AF250 /* Pods_ListShareTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ListShareTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
