@@ -33,17 +33,11 @@ class ViewController5: UIViewController {
         
         
     }
-    
     @IBAction func isdoneButton(_ sender: Any) {
         if (isDone! == "Not Done") {
-                ref4?.child("Lists").child(getlistKey).child("addedItems").child(transfergetList).child("isDone").setValue("Done")
-                self.isdoneText.text = "Done"
-            } else {
-                ref4?.child("Lists").child(getlistKey).child("addedItems").child(transfergetList).child("isDone").setValue("Not Done")
-                self.isdoneText.text = "Not Done"
-            }
-        
+            ref4?.child("Lists").child(getlistKey).child("addedItems").child(transfergetList).child("isDone").setValue("Done")
+        } else {
+            ref4?.child("Lists").child(getlistKey).child("addedItems").child(transfergetList).child("isDone").setValue("Not Done")
+        }
     }
-    
-    
 }
