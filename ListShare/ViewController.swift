@@ -46,9 +46,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             //Gets your list keys
             ref?.child("Users").child(username!).child("addedList").observe(.childAdded, with: { (snapshot) in
                 
-                listKeys = defaults.object(forKey: "listKeys") as! [String]
+                listKeys.removeAll()
                 listKeys.append(snapshot.key)
-                defaults.set(listKeys, forKey: "listKeys")
                 
             })
                 
